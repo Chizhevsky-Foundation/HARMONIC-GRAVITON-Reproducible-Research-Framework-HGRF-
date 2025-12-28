@@ -1,36 +1,37 @@
-name: hgrf channels:
-
-    conda-forge
-        defaults dependencies:
-        python=3.10
-        pip
-        numpy=1.25
-        scipy=1.11
-        pandas=2.2
-        matplotlib=3.8
-        seaborn=0.12
-        plotly=5.16
-        scikit-learn=1.3
-        scikit-image=0.21
-        jupyterlab=4.3
-        notebook=6.5
-        ipykernel
-        uproot=6.0
-        awkward=2.2
-        h5py
-        statsmodels=0.14
-        cython
-        pip:
-            powerlaw==1.5
-            nolds==0.5
-            pywavelets==1.4.1
-            tensorflow==2.12.0
-            torch # opcional; si quieres versión CUDA específica, instala vía pip según tu CUDA
-            joblib
-            tqdm
-            cloudpickle
-            matplotlib-inline
-            nbformat
-            black
-            flake8
-            pytest
+name: hgrf
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy=1.25
+  - scipy=1.11
+  - pandas=2.2
+  - matplotlib=3.8
+  - seaborn=0.12
+  - plotly=5.16
+  - scikit-learn=1.3
+  - scikit-image=0.21
+  - jupyterlab=4.3
+  - notebook=6.5
+  - ipykernel
+  - uproot=6.0
+  - awkward=2.2
+  - h5py
+  - statsmodels=0.14
+  - cython
+  - pip:
+    - powerlaw==1.5
+    - nolds==0.5
+    - pywavelets==1.4.1
+    - tensorflow==2.12.0
+    - torch
+    - joblib
+    - tqdm
+    - cloudpickle
+    - matplotlib-inline
+    - nbformat
+    - black
+    - flake8
+    - pytest
