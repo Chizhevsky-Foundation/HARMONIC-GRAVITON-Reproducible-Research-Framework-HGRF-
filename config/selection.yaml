@@ -1,0 +1,52 @@
+# config/selection.yaml
+# Selection configuration used by src/selection.py and notebooks.
+# Autor/responsable: Benjamin Cabeza Durán
+# Fecha: 2025-12-28
+
+metadata:
+  author: "Benjamin Cabeza Durán"
+  email: "ia.mechmind@gmail.com"
+  project: "HARMONIC-GRAVITON — HGRF"
+  description: "Configuración estándar de cortes para selección de muones y eventos."
+
+global:
+  entry_stop: null
+  sample_fraction: 1.0
+  output_format: "parquet"
+
+muon_selection:
+  pt_min: 5.0
+  pt_max: null
+  eta_abs_max: 2.4
+  iso_max: null
+  require_id:
+    - "tight"
+    - "highPt"
+  veto_id: []
+  min_n_muons: 2
+  max_n_muons: null
+
+event_selection:
+  min_vertices: 0
+  max_missing_et: null
+
+triggers:
+  require_any:
+    - "HLT_IsoMu24"
+    - "HLT_Mu50"
+  veto_any: []
+
+flags_and_quality:
+  good_run_list: null
+  require_global_flags: []
+  ignore_bad_lumi: false
+
+output:
+  per_event_output: "results/preprocessed_event.parquet"
+  per_particle_output: "results/preprocessed_particles.parquet"
+  angles_summary: "results/angles_summary.csv"
+
+notes:
+  - "Ajusta pt_min y eta_abs_max según la versión del dataset y la estrategia de análisis."
+  - "Si las ramas de ID/ISO llevan nombres distintos en tu ROOT, edita src/selection.py para mapear correctamente."
+  - "entry_stop y sample_fraction son útiles para desarrollo en máquinas con recursos limitados."
