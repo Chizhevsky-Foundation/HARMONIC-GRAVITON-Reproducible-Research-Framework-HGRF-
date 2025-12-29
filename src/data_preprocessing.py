@@ -96,7 +96,7 @@ def per_event_summary(tree, entry_stop=None):
     # optional event ids
     run = arrs.get(id_run, ak.zeros_like(n_mu, dtype=int))
     lumi = arrs.get(id_lumi, ak.zeros_like(n_mu, dtype=int))
-    evt = arrs.get(id_evt, ak.arange(len(n_mu)))
+    evt = arrs.get(id_evt, ak.Array(np.arange(len(n_mu)))
 
     df = pd.DataFrame({
         "run": ak.to_numpy(run),
@@ -133,7 +133,7 @@ def per_particle_table(tree, entry_stop=None):
     # event ids
     run = arrs.get(id_run, ak.zeros_like(mu_pt, dtype=int))
     lumi = arrs.get(id_lumi, ak.zeros_like(mu_pt, dtype=int))
-    evt = arrs.get(id_evt, ak.arange(len(mu_pt)))
+    evt = arrs.get(id_evt, ak.Array(np.arange(len(mu_pt)))
 
     # repeat per muon using awkward.repeat and flatten
     counts = ak.num(mu_pt)

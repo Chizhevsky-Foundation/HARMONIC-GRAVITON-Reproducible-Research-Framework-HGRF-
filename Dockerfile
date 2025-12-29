@@ -1,26 +1,26 @@
-# Dockerfile para HGRF (entorno reproducible, CPU)
-FROM continuumio/miniconda3:23.11.1
+# Dockerfile reproducible (CPU) para HGRF — usa mambaforge y pip para paquetes PyPI no disponibles en conda
+FROM condaforge/mambaforge:latest
 
-# Evitar prompts de conda
-ENV PATH /opt/conda/bin:$PATH
 SHELL ["/bin/bash", "-lc"]
-
-# Copiar environment y crear el entorno
 WORKDIR /opt/hgrf
+
+# Copiar environment
 COPY environment.yml /opt/hgrf/environment.yml
 
-RUN conda update -n base -c defaults conda -y && \
-    conda env create -f /opt/hgrf/environment.yml && \
-    conda clean -afy
+# Crear env base con mamba pero sin instalar paquetes pip-only
+# We'll create the env and then pip-install uproot/awkward/etc.
+RUN mamba env create -f /opt/hgrf/environment.yml -n hgrf --no-pin || true && \
+    /opt/conda/envs/hgrf/bin/python -m pip install --upgrade pip setuptools wheel && \
+    # install packages that may be only available in PyPI
+    /opt/conda/envs/hgrf/bin/python -m pip install "uproot" "awkward" && \
+    mamba clean --all --yes
 
-# Make RUN commands use the new environment:
 ENV CONDA_DEFAULT_ENV=hgrf
-ENV PATH /opt/conda/envs/hgrf/bin:$PATH
+ENV PATH=/opt/conda/envs/hgrf/bin:$PATH
 
-# Crear un usuario no-root opcional (mejor práctica)
-RUN useradd -m hgrfuser && chown -R hgrfuser:hgrfuser /opt/hgrf
+# Crear usuario no-root
+RUN useradd -m hgrfuser && chown -R hgrfuser /opt/hgrf
 USER hgrfuser
 WORKDIR /home/hgrfuser
 
-# Entrypoint por defecto: bash (útil para interactuar)
 ENTRYPOINT ["/bin/bash"]
