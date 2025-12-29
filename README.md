@@ -1,5 +1,6 @@
 # HARMONIC‑GRAVITON — Reproducible Research Framework (HGRF)
 
+[![CI](https://github.com/Chizhevsky-Foundation/HARMONIC-GRAVITON-Reproducible-Research-Framework-HGRF-/actions/workflows/test-and-verify.yml/badge.svg)](https://github.com/Chizhevsky-Foundation/HARMONIC-GRAVITON-Reproducible-Research-Framework-HGRF-/actions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-lightgrey.svg)](#) [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#) [![Status](https://img.shields.io/badge/Status-Active%20Research-green.svg)](#)
 
 Versión: 2025-12-28  
