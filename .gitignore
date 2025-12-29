@@ -1,0 +1,9 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Results and temporary outputs
+results/
+tmp_*
+# Optional: ignore large raw files (uncomment if you prefer)
+# data/raw/*.root
