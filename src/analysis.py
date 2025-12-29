@@ -142,7 +142,7 @@ def compute_angles_from_pt_eta_phi(pt, eta, phi):
     cosang = dot / (norm0 * norm1)
     # numerical safety: clip
     cosang = ak.where(ak.is_none(cosang), 1.0, cosang)
-    cosang = ak.clip(cosang, -1.0, 1.0)
+    cosang = ak.where(cosang < -1.0, -1.0, ak.where(cosang > 1.0, 1.0, cosang))
     ang = np.degrees(np.arccos(cosang))
     return ang  # jagged array same shape as number of pairs per event
 
