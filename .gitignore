@@ -7,3 +7,9 @@ results/
 tmp_*
 # Optional: ignore large raw files (uncomment if you prefer)
 # data/raw/*.root
+# Local env installer / staging
+source/
+# Jupyter temp files
+Untitled*.ipynb
+# Results (keep out unless intentionally versioned)
+results/
