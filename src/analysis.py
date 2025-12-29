@@ -128,17 +128,17 @@ def compute_angles_from_pt_eta_phi(pt, eta, phi):
     compute pairwise angles in degrees per event and return jagged array of angles (deg).
     """
     # compute Cartesian components (px,py,pz)
-    px = pt * ak.cos(phi)
-    py = pt * ak.sin(phi)
-    pz = pt * ak.sinh(eta)
+    px = pt * np.cos(phi)
+    py = pt * np.sin(phi)
+    pz = pt * np.sinh(eta)
     p = ak.zip({"px": px, "py": py, "pz": pz})
     # combinations of pairs per event
     pairs = ak.combinations(p, 2, axis=1)
     p0 = pairs["0"]
     p1 = pairs["1"]
     dot = p0["px"] * p1["px"] + p0["py"] * p1["py"] + p0["pz"] * p1["pz"]
-    norm0 = ak.sqrt(p0["px"] ** 2 + p0["py"] ** 2 + p0["pz"] ** 2)
-    norm1 = ak.sqrt(p1["px"] ** 2 + p1["py"] ** 2 + p1["pz"] ** 2)
+    norm0 = np.sqrt(p0["px"] ** 2 + p0["py"] ** 2 + p0["pz"] ** 2)
+    norm1 = np.sqrt(p1["px"] ** 2 + p1["py"] ** 2 + p1["pz"] ** 2)
     cosang = dot / (norm0 * norm1)
     # numerical safety: clip
     cosang = ak.where(ak.is_none(cosang), 1.0, cosang)

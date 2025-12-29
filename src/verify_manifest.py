@@ -78,11 +78,13 @@ def scan_manifest(manifest_path: Path):
         return results
     txt = manifest_path.read_text()
     data = json.loads(txt)
+    # Use the manifest's directory as the data directory (supports tmp_path in tests)
+    data_dir = manifest_path.parent
     for f in data.get("files", []):
         fname = f.get("filename")
         expected = f.get("sha256")
         entry = {"manifest_present": True, "expected_sha256": expected, "source_url": f.get("source_url"), "manifest_entry": f}
-        target = DATA_DIR / fname
+        target = data_dir / fname
         if target.exists():
             entry["exists"] = True
             entry["computed_sha256"] = sha256_of_file(target)
