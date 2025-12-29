@@ -96,7 +96,7 @@ def per_event_summary(tree, entry_stop=None):
     # optional event ids
     run = arrs.get(id_run, ak.zeros_like(n_mu, dtype=int))
     lumi = arrs.get(id_lumi, ak.zeros_like(n_mu, dtype=int))
-    evt = arrs.get(id_evt, ak.Array(np.arange(len(n_mu)))
+    evt = arrs.get(id_evt, ak.Array(np.arange(len(n_mu))))
 
     df = pd.DataFrame({
         "run": ak.to_numpy(run),
@@ -133,14 +133,19 @@ def per_particle_table(tree, entry_stop=None):
     # event ids
     run = arrs.get(id_run, ak.zeros_like(mu_pt, dtype=int))
     lumi = arrs.get(id_lumi, ak.zeros_like(mu_pt, dtype=int))
-    evt = arrs.get(id_evt, ak.Array(np.arange(len(mu_pt)))
+    evt = arrs.get(id_evt, ak.Array(np.arange(len(mu_pt))))
 
     # repeat per muon using awkward.repeat and flatten
     counts = ak.num(mu_pt)
-    # repeat event ids to match per-muon counts, then flatten
-    run_rep = ak.flatten(ak.repeat(run, counts))
-    lumi_rep = ak.flatten(ak.repeat(lumi, counts))
-    evt_rep = ak.flatten(ak.repeat(evt, counts))
+    # Build repeated event ids without ak.repeat (compatible with awkward versions)
+    # Convert run/lumi/event scalars to Python lists and repeat per-event counts
+    run_list = [[int(r)] * int(n) for r, n in zip(ak.to_list(run), ak.to_list(counts))]
+    lumi_list = [[int(l)] * int(n) for l, n in zip(ak.to_list(lumi), ak.to_list(counts))]
+    evt_list = [[int(e)] * int(n) for e, n in zip(ak.to_list(evt), ak.to_list(counts))]
+
+    run_rep = ak.flatten(ak.Array(run_list))
+    lumi_rep = ak.flatten(ak.Array(lumi_list))
+    evt_rep = ak.flatten(ak.Array(evt_list))
 
     pt_flat = ak.flatten(mu_pt)
     eta_flat = ak.flatten(mu_eta)
