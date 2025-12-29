@@ -36,5 +36,3 @@ jobs:
           else
             echo "No manifest or sha256 files found — skipping verify_manifest."
           fi
-``*
-
