@@ -16,7 +16,7 @@ dependencies:
   - jupyterlab=4.3
   - notebook=6.5
   - ipykernel
-  - uproot=6.0
+
   - awkward=2.2
   - h5py
   - statsmodels=0.14
