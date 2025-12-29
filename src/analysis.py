@@ -144,6 +144,14 @@ def compute_angles_from_pt_eta_phi(pt, eta, phi):
     cosang = ak.where(ak.is_none(cosang), 1.0, cosang)
     cosang = ak.where(cosang < -1.0, -1.0, ak.where(cosang > 1.0, 1.0, cosang))
     ang = np.degrees(np.arccos(cosang))
+    # Ensure a consistent jagged array (no union types): convert to Python lists per-event
+    try:
+        ang_list = ak.to_list(ang)
+    except Exception:
+        # fallback: coerce to numpy then to list
+        ang_list = [list(a) if hasattr(a, '__iter__') else [float(a)] for a in ang]
+    ang = ak.Array(ang_list)
+
     return ang  # jagged array same shape as number of pairs per event
 
 
